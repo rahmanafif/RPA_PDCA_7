@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="TLSCBUReportProcess" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="TLSCBUReportProcess" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
     <x:Property Name="in_DTTLSCBU" Type="InArgument(sd:DataTable)" />
@@ -6,7 +6,7 @@
     <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
     <x:Property Name="io_DTSummary" Type="InOutArgument(sd:DataTable)" />
   </x:Members>
-  <sap:VirtualizedContainerService.HintSize>1618,2876</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1236,1440</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -97,9 +97,9 @@
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="TLS CBU Report Process" sap:VirtualizedContainerService.HintSize="1628,2811" sap2010:WorkflowViewState.IdRef="Sequence_40">
+  <Sequence DisplayName="TLS CBU Report Process" sap:VirtualizedContainerService.HintSize="883,1375" sap2010:WorkflowViewState.IdRef="Sequence_40">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Default="chrome.exe" Name="BrowserApp" />
+      <Variable x:TypeArguments="x:String" Default="[in_Config(&quot;BrowserApp&quot;).ToString.Trim]" Name="BrowserApp" />
       <Variable x:TypeArguments="x:String" Name="AllInvoiceNumber" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
@@ -107,290 +107,400 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="1566,2700" sap2010:WorkflowViewState.IdRef="RetryScope_1">
+    <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="821,1264" sap2010:WorkflowViewState.IdRef="RetryScope_1">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
-          <uix:NApplicationCard AttachMode="SingleWindow" CloseMode="Never" DisplayName="Use Browser Home - Toyota Logistic System" sap:VirtualizedContainerService.HintSize="1524,2525" sap2010:WorkflowViewState.IdRef="NApplicationCard_5" OpenMode="Never" ScopeGuid="843c708f-3596-4a43-9e08-bf2dd83927ab" Version="V2">
+          <uix:NApplicationCard AttachMode="SingleWindow" CloseMode="Never" DisplayName="Use Browser Home - Toyota Logistic System" sap:VirtualizedContainerService.HintSize="779,1089" sap2010:WorkflowViewState.IdRef="NApplicationCard_5" OpenMode="Never" ScopeGuid="843c708f-3596-4a43-9e08-bf2dd83927ab" Version="V2">
             <uix:NApplicationCard.Body>
               <ActivityAction x:TypeArguments="x:Object">
                 <ActivityAction.Argument>
                   <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
                 </ActivityAction.Argument>
-                <Sequence DisplayName="Input Invoice Number and try download CBU Report" sap:VirtualizedContainerService.HintSize="1490,2308" sap2010:WorkflowViewState.IdRef="Sequence_19">
-                  <Sequence.Variables>
+                <Flowchart DisplayName="Flowchart - Data Entry" sap:VirtualizedContainerService.HintSize="745,922" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+                  <Flowchart.Variables>
                     <Variable x:TypeArguments="x:Boolean" Name="TLSAlertNotifExists" />
-                    <Variable x:TypeArguments="x:String" Name="Alert" />
-                  </Sequence.Variables>
+                    <Variable x:TypeArguments="x:Boolean" Name="DataExists" />
+                    <Variable x:TypeArguments="si:FileInfo" Name="CBUReportFile" />
+                  </Flowchart.Variables>
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      <av:Point x:Key="ShapeLocation">320,2.5</av:Point>
+                      <av:Size x:Key="ShapeSize">60,75</av:Size>
+                      <av:PointCollection x:Key="ConnectorLocation">350,77.5 350,127.5</av:PointCollection>
+                      <x:Double x:Key="Width">710.641666666667</x:Double>
+                      <x:Double x:Key="Height">884.54</x:Double>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <uix:NGoToUrl DisplayName="Go To URL - CBU Report" sap:VirtualizedContainerService.HintSize="1428,52" sap2010:WorkflowViewState.IdRef="NGoToUrl_3" Url="[in_Config(&quot;TLS_URL&quot;).ToString.Trim+&quot;/&quot;+in_Config(&quot;TLS_CBU_Report&quot;).ToString.Trim]" Version="V3">
+                  <Flowchart.StartNode>
+                    <x:Reference>__ReferenceID9</x:Reference>
+                  </Flowchart.StartNode>
+                  <FlowStep x:Name="__ReferenceID9">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        <av:Point x:Key="ShapeLocation">250,127.5</av:Point>
+                        <av:Size x:Key="ShapeSize">200,52</av:Size>
+                        <av:PointCollection x:Key="ConnectorLocation">350,179.5 350,209.5 350.5,209.5 350.5,229.5</av:PointCollection>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                  </uix:NGoToUrl>
-                  <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[in_DTTLSCBU]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="1428,52" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
-                    <ui:ForEachRow.Body>
-                      <ActivityAction x:TypeArguments="sd:DataRow">
-                        <ActivityAction.Argument>
-                          <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
-                        </ActivityAction.Argument>
-                        <Assign sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_1">
-                          <Assign.To>
-                            <OutArgument x:TypeArguments="x:String">[AllInvoiceNumber]</OutArgument>
-                          </Assign.To>
-                          <Assign.Value>
-                            <InArgument x:TypeArguments="x:String">[AllInvoiceNumber+CurrentRow("TLS_INVOICE_NUMBER").ToString.Trim+","]</InArgument>
-                          </Assign.Value>
-                        </Assign>
-                      </ActivityAction>
-                    </ui:ForEachRow.Body>
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </ui:ForEachRow>
-                  <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into 'Invoice No'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="1428,52" sap2010:WorkflowViewState.IdRef="NTypeInto_6" InteractionMode="Simulate" ScopeIdentifier="843c708f-3596-4a43-9e08-bf2dd83927ab" Text="[AllInvoiceNumber]" Version="V3">
-                    <uix:NTypeInto.Target>
-                      <uix:TargetAnchorable BrowserURL="http://10.85.72.36:3031/cbu-report" DesignTimeRectangle="454, 223, 415, 74" DesignTimeScaleFactor="1" ElementType="InputBox" FriendlyName="'TEXTAREA'" FullSelectorArgument="&lt;webctrl tag='TEXTAREA' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='TEXTAREA' type='' class='form-control ng-pristine ng-untouched ng-valid ng-empty' aaname='' /&gt;" Guid="a482fccf-2ded-49ae-a8f7-50ea760db33a" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAaMAAABOCAYAAACNOHkcAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGJSURBVHhe7dkxTsRAEEVBTuvT+io4IVrJstEEILSsN/O8pEr6Wecv6I/Pr8dpZmZWTozMzCzfb4zWdTUzM5u6lzHats3MzGzKLmO07/t5HIeZmdmtG725jNE4AIC7jd6IEQApMQIgJ0YA5MQIgJwYAZATIwByYgRATowAyIkRADkxAiAnRgDkxAiAnBgBkBMjAHJiBEBOjADIiREAOTECICdGAOTECICcGAGQEyMAcmIEQE6MAMiJEQA5MQIgJ0YA5MQIgJwYAZATIwByYgRATowAyIkRADkxAiAnRgDkxAiAnBgBkBMjAHJiBEBOjADIiREAOTECICdGAOTECICcGAGQEyMAcmIEQE6MAMiJEQA5MQIgJ0YA5MQIgJwYAZATIwByYgRATowAyIkRADkxAiAnRgDkxAiAnBgBkFqWRYwA6IwQDWIEQOInRIMYATDd3xANYgTAVM8h8jMCYKpXIRrECIAprkI0iBEAt3sXokGMAMi9jZGZmdnM/YuRmZlZNTEyM7N4j/MbKP/9IYqZJooAAAAASUVORK5CYII=" InformativeScreenshot="f013849bc25ee51299ae599a073f5a57.png" IsResponsive="True" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Total CBU Report - Toyota Logistic System' /&gt;" SearchSteps="Selector, FuzzySelector" Version="V2" Visibility="Interactive">
-                        <uix:TargetAnchorable.Anchors>
-                          <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
-                            <uix:Target DesignTimeRectangle="276, 223, 61, 27" ElementType="Text" FriendlyName="'Invoice No'" FullSelectorArgument="&lt;webctrl tag='LABEL' aaname='Invoice No' class='control-label' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='LABEL' aaname='Invoice No' class='control-label' type='' check:text='Invoice No' /&gt;" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAEEAAAAfCAYAAAC4c6DCAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAG+SURBVGhD7ZM9SwNREEX96WnSxFYFRUTsBFEQEQQrCyGFiFjYqKAiBEEQUqVa5yzcZTJ5G2FZYpEpDu6bjzvz7jMb39NZte6kCUaaYKQJRppgpAlGmmCkCUaaYKQJRppgpAlGmmCs1IT7x6dqOBxWZ+cXxfx/0ZigBQ8OjxaK+qJvE9AZDAa1JtrEPr9+qq3tnRq+Y0+JlZrQNzIBtHevJvAXoeOT02YQQzVkNNqsXj8mde3N7Xghrx7/SnFGrEWnFG97GOahxy6ao17gmzrt16a31AQaShdXTktz1hJ8qy72lWYoJ116fFw97KFdhUy4vLpudKMJsd8/mHSWmsCZOGcN5Fx6eXh6fquXl4b6ZJifwQVjLcR4vJSv9Ttp3/Hdw1y9r/H6Xq+TCV6IocTJRw2QYdGEUi0oTo/nLxPUx8/XmxDvQczniXUywed39/abeNRQXxcTYrxE207+pRVTTW//CZz1wv6V5DJDGBbPfkbMAfGX98lcXPuViDtJ3++kPamlJp6hswksyKJRUJcjDv4ycYbXaNMWfoaIOwHa1MsEYv7BSlqNCetMmmCkCUaaYKQJRppgpAlGmjCdVb+reAszhqy40gAAAABJRU5ErkJggg==" SearchSteps="Selector, FuzzySelector" />
-                          </scg:List>
-                        </uix:TargetAnchorable.Anchors>
-                      </uix:TargetAnchorable>
-                    </uix:NTypeInto.Target>
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </uix:NTypeInto>
-                  <uix:NClick ActivateBefore="True" ClickType="Single" DelayBefore="2" DisplayName="Click 'Generate'" sap:VirtualizedContainerService.HintSize="1428,52" sap2010:WorkflowViewState.IdRef="NClick_1" InteractionMode="HardwareEvents" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="843c708f-3596-4a43-9e08-bf2dd83927ab" Version="V3">
-                    <uix:NClick.Target>
-                      <uix:TargetAnchorable BrowserURL="http://10.85.72.36:3031/cbu-report" DesignTimeRectangle="1084, 449, 125, 34" DesignTimeScaleFactor="1" ElementType="Button" FriendlyName="'Generate'" FullSelectorArgument="&lt;webctrl aaname=' Generate ' parentname='me.cbuReportForm' tag='BUTTON' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname=' Generate ' parentname='me.cbuReportForm' tag='BUTTON' type='' class='btn btn-primary' check:innerText='Generate' /&gt;" Guid="3968847b-c672-4738-b693-b2d731ac96cc" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAIEAAAAmCAYAAADjufgGAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHmSURBVHhe7ZWxSgNBEIZ9IhsfysoXEHwSLa1sLO3sxUYrm1hIsAgYQohKEoLrfcHRYdxNbIK73L/wcZedub1l5rvN3ni2SKLfSALxI8H+0bnoGVkJDo6vRE+QBEISCEkgOiSBkARCEogOSSAkgZAEokMSiLYkOL0epOXqI9ngnrlc7n9weTtMo+k8HZ7dZOO10owEFDg2nfvh+L2aokuCHXJycZ9e56t1kXNxg7gN8nmOeWSZvC3Tw/P0K5rSzeDl+zl/wnjReJ7n7p4m69jjaLae52rD1uHqh+WW9lQTTUhAIbcVkMaRYw30X6U12TfG1gPumbN1aLyP+a+bZvvc0jv/Eq+FZiTwxfNfos3THGsy0ECaSQPAGhtjcW2u/Gbe59m6nhiPa23ak83VQNMngS96PI4ZdrTDJglyoyQBc+zFhv/7yEkQh8+vhSYksMJTZD8fJfBfnWebBL5xnigBOeTyrlw8J0FpTzXRhARAQeNX5IvOvP//9TBXkoD7nGAxj98mgeVy3XQSMF/aU000IwFQ5Dh882LcC1KSgN9caaYNGkdOzIvvIMY7LG6SMOy0KO3J1quBpiQQu0ESCEkgJIHokARCEghJIDokgZAEQhKIDkkgJIHYIIHoF78kEP1FEvSeRfoEQcl+3ng1CqMAAAAASUVORK5CYII=" InformativeScreenshot="61a06ada10ff2d95b48e10c39fa386be.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Total CBU Report - Toyota Logistic System' /&gt;" SearchSteps="Selector, FuzzySelector" Version="V2" Visibility="Visible" />
-                    </uix:NClick.Target>
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </uix:NClick>
-                  <ui:UiElementExists DisplayName="Element Exists - TLS Alert Notif" Exists="[TLSAlertNotifExists]" sap:VirtualizedContainerService.HintSize="1428,87" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
-                    <ui:UiElementExists.Target>
-                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="89281698-d5f5-44a8-a0e9-1927901ead40" Selector="[string.Format(&quot;&lt;html app='{0}' title='* - Toyota Logistic System' /&gt;&lt;webctrl aaname='*' tag='DIV' class='ajs-message ajs-error ajs-visible' /&gt;&quot;, BrowserApp)]">
-                        <ui:Target.TimeoutMS>
-                          <InArgument x:TypeArguments="x:Int32" />
-                        </ui:Target.TimeoutMS>
-                        <ui:Target.WaitForReady>
-                          <InArgument x:TypeArguments="ui:WaitForReady" />
-                        </ui:Target.WaitForReady>
-                      </ui:Target>
-                    </ui:UiElementExists.Target>
-                  </ui:UiElementExists>
-                  <If Condition="[Not TLSAlertNotifExists]" DisplayName="If TLS Alert Notif not detected" sap:VirtualizedContainerService.HintSize="1428,1698" sap2010:WorkflowViewState.IdRef="If_1">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                    <If.Then>
-                      <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="933,1538" sap2010:WorkflowViewState.IdRef="RetryScope_2">
-                        <ui:RetryScope.ActivityBody>
-                          <ActivityAction>
-                            <Sequence DisplayName="Check if data appears" sap:VirtualizedContainerService.HintSize="891,1363" sap2010:WorkflowViewState.IdRef="Sequence_44">
-                              <Sequence.Variables>
-                                <Variable x:TypeArguments="x:Boolean" Name="DataExists" />
-                              </Sequence.Variables>
+                    <uix:NGoToUrl DisplayName="Go To URL - CBU Report" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="NGoToUrl_4" Url="[in_Config(&quot;TLS_URL&quot;).ToString.Trim+&quot;/&quot;+in_Config(&quot;TLS_CBU_Report&quot;).ToString.Trim]" Version="V3">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </uix:NGoToUrl>
+                    <FlowStep.Next>
+                      <FlowStep x:Name="__ReferenceID0">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <av:Point x:Key="ShapeLocation">240,229.5</av:Point>
+                            <av:Size x:Key="ShapeSize">221,81</av:Size>
+                            <av:PointCollection x:Key="ConnectorLocation">350.5,310.5 350.5,360.5</av:PointCollection>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Sequence DisplayName="Entry Invoice Number to TLS" sap:VirtualizedContainerService.HintSize="221,81" sap2010:WorkflowViewState.IdRef="Sequence_47">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="388,92" sap2010:WorkflowViewState.IdRef="LogMessage_6" Message="[&quot;Input Invoice Number&quot;]" />
+                          <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[in_DTTLSCBU]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="ForEachRow_4">
+                            <ui:ForEachRow.Body>
+                              <ActivityAction x:TypeArguments="sd:DataRow">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+                                </ActivityAction.Argument>
+                                <Assign DisplayName="Assign - Collect all the invoice number" sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_3">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[AllInvoiceNumber]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[AllInvoiceNumber+CurrentRow("TLS_INVOICE_NUMBER").ToString.Trim+","]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </ActivityAction>
+                            </ui:ForEachRow.Body>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:ForEachRow>
+                          <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into 'Invoice No'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="388,217" sap2010:WorkflowViewState.IdRef="NTypeInto_8" InteractionMode="Simulate" ScopeIdentifier="843c708f-3596-4a43-9e08-bf2dd83927ab" Text="[AllInvoiceNumber]" Version="V3">
+                            <uix:NTypeInto.Target>
+                              <uix:TargetAnchorable BrowserURL="http://10.85.72.36:3031/cbu-report" DesignTimeRectangle="454, 223, 415, 74" DesignTimeScaleFactor="1" ElementType="InputBox" FriendlyName="'TEXTAREA'" FullSelectorArgument="&lt;webctrl tag='TEXTAREA' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='TEXTAREA' type='' class='form-control ng-pristine ng-untouched ng-valid ng-empty' aaname='' /&gt;" Guid="a482fccf-2ded-49ae-a8f7-50ea760db33a" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAaMAAABOCAYAAACNOHkcAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGJSURBVHhe7dkxTsRAEEVBTuvT+io4IVrJstEEILSsN/O8pEr6Wecv6I/Pr8dpZmZWTozMzCzfb4zWdTUzM5u6lzHats3MzGzKLmO07/t5HIeZmdmtG725jNE4AIC7jd6IEQApMQIgJ0YA5MQIgJwYAZATIwByYgRATowAyIkRADkxAiAnRgDkxAiAnBgBkBMjAHJiBEBOjADIiREAOTECICdGAOTECICcGAGQEyMAcmIEQE6MAMiJEQA5MQIgJ0YA5MQIgJwYAZATIwByYgRATowAyIkRADkxAiAnRgDkxAiAnBgBkBMjAHJiBEBOjADIiREAOTECICdGAOTECICcGAGQEyMAcmIEQE6MAMiJEQA5MQIgJ0YA5MQIgJwYAZATIwByYgRATowAyIkRADkxAiAnRgDkxAiAnBgBkFqWRYwA6IwQDWIEQOInRIMYATDd3xANYgTAVM8h8jMCYKpXIRrECIAprkI0iBEAt3sXokGMAMi9jZGZmdnM/YuRmZlZNTEyM7N4j/MbKP/9IYqZJooAAAAASUVORK5CYII=" InformativeScreenshot="f013849bc25ee51299ae599a073f5a57.png" IsResponsive="True" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Total CBU Report - Toyota Logistic System' /&gt;" SearchSteps="Selector, FuzzySelector" Version="V2" Visibility="Interactive">
+                                <uix:TargetAnchorable.Anchors>
+                                  <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                                    <uix:Target DesignTimeRectangle="276, 223, 61, 27" ElementType="Text" FriendlyName="'Invoice No'" FullSelectorArgument="&lt;webctrl tag='LABEL' aaname='Invoice No' class='control-label' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='LABEL' aaname='Invoice No' class='control-label' type='' check:text='Invoice No' /&gt;" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAEEAAAAfCAYAAAC4c6DCAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAG+SURBVGhD7ZM9SwNREEX96WnSxFYFRUTsBFEQEQQrCyGFiFjYqKAiBEEQUqVa5yzcZTJ5G2FZYpEpDu6bjzvz7jMb39NZte6kCUaaYKQJRppgpAlGmmCkCUaaYKQJRppgpAlGmmCs1IT7x6dqOBxWZ+cXxfx/0ZigBQ8OjxaK+qJvE9AZDAa1JtrEPr9+qq3tnRq+Y0+JlZrQNzIBtHevJvAXoeOT02YQQzVkNNqsXj8mde3N7Xghrx7/SnFGrEWnFG97GOahxy6ao17gmzrt16a31AQaShdXTktz1hJ8qy72lWYoJ116fFw97KFdhUy4vLpudKMJsd8/mHSWmsCZOGcN5Fx6eXh6fquXl4b6ZJifwQVjLcR4vJSv9Ttp3/Hdw1y9r/H6Xq+TCV6IocTJRw2QYdGEUi0oTo/nLxPUx8/XmxDvQczniXUywed39/abeNRQXxcTYrxE207+pRVTTW//CZz1wv6V5DJDGBbPfkbMAfGX98lcXPuViDtJ3++kPamlJp6hswksyKJRUJcjDv4ycYbXaNMWfoaIOwHa1MsEYv7BSlqNCetMmmCkCUaaYKQJRppgpAlGmjCdVb+reAszhqy40gAAAABJRU5ErkJggg==" SearchSteps="Selector, FuzzySelector" />
+                                  </scg:List>
+                                </uix:TargetAnchorable.Anchors>
+                              </uix:TargetAnchorable>
+                            </uix:NTypeInto.Target>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </uix:NTypeInto>
+                        </Sequence>
+                        <FlowStep.Next>
+                          <FlowStep x:Name="__ReferenceID1">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <av:Point x:Key="ShapeLocation">250.5,360.5</av:Point>
+                                <av:Size x:Key="ShapeSize">200,81</av:Size>
+                                <av:PointCollection x:Key="ConnectorLocation">350.5,441.5 350.5,471.5 352.141666666667,471.5 352.141666666667,491.5</av:PointCollection>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <Sequence DisplayName="Generate Data" sap:VirtualizedContainerService.HintSize="200,81" sap2010:WorkflowViewState.IdRef="Sequence_48">
                               <sap:WorkflowViewStateService.ViewState>
                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                 </scg:Dictionary>
                               </sap:WorkflowViewStateService.ViewState>
-                              <ui:UiElementExists DisplayName="Element Exists - Data Exists" Exists="[DataExists]" sap:VirtualizedContainerService.HintSize="829,87" sap2010:WorkflowViewState.IdRef="UiElementExists_2">
+                              <uix:NClick ActivateBefore="True" ClickType="Single" DelayBefore="2" DisplayName="Click 'Generate'" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="NClick_7" InteractionMode="HardwareEvents" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="843c708f-3596-4a43-9e08-bf2dd83927ab" Version="V3">
+                                <uix:NClick.Target>
+                                  <uix:TargetAnchorable BrowserURL="http://10.85.72.36:3031/cbu-report" DesignTimeRectangle="1084, 449, 125, 34" DesignTimeScaleFactor="1" ElementType="Button" FriendlyName="'Generate'" FullSelectorArgument="&lt;webctrl aaname=' Generate ' parentname='me.cbuReportForm' tag='BUTTON' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname=' Generate ' parentname='me.cbuReportForm' tag='BUTTON' type='' class='btn btn-primary' check:innerText='Generate' /&gt;" Guid="3968847b-c672-4738-b693-b2d731ac96cc" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAIEAAAAmCAYAAADjufgGAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHmSURBVHhe7ZWxSgNBEIZ9IhsfysoXEHwSLa1sLO3sxUYrm1hIsAgYQohKEoLrfcHRYdxNbIK73L/wcZedub1l5rvN3ni2SKLfSALxI8H+0bnoGVkJDo6vRE+QBEISCEkgOiSBkARCEogOSSAkgZAEokMSiLYkOL0epOXqI9ngnrlc7n9weTtMo+k8HZ7dZOO10owEFDg2nfvh+L2aokuCHXJycZ9e56t1kXNxg7gN8nmOeWSZvC3Tw/P0K5rSzeDl+zl/wnjReJ7n7p4m69jjaLae52rD1uHqh+WW9lQTTUhAIbcVkMaRYw30X6U12TfG1gPumbN1aLyP+a+bZvvc0jv/Eq+FZiTwxfNfos3THGsy0ECaSQPAGhtjcW2u/Gbe59m6nhiPa23ak83VQNMngS96PI4ZdrTDJglyoyQBc+zFhv/7yEkQh8+vhSYksMJTZD8fJfBfnWebBL5xnigBOeTyrlw8J0FpTzXRhARAQeNX5IvOvP//9TBXkoD7nGAxj98mgeVy3XQSMF/aU000IwFQ5Dh882LcC1KSgN9caaYNGkdOzIvvIMY7LG6SMOy0KO3J1quBpiQQu0ESCEkgJIHokARCEghJIDokgZAEQhKIDkkgJIHYIIHoF78kEP1FEvSeRfoEQcl+3ng1CqMAAAAASUVORK5CYII=" InformativeScreenshot="61a06ada10ff2d95b48e10c39fa386be.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Total CBU Report - Toyota Logistic System' /&gt;" SearchSteps="Selector, FuzzySelector" Version="V2" Visibility="Visible" />
+                                </uix:NClick.Target>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </uix:NClick>
+                              <ui:UiElementExists DisplayName="Element Exists - TLS Alert Notif" Exists="[TLSAlertNotifExists]" sap:VirtualizedContainerService.HintSize="388,87" sap2010:WorkflowViewState.IdRef="UiElementExists_4">
                                 <ui:UiElementExists.Target>
-                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="57f51b87-1725-4e20-b655-2a4c4aaedbb7" Selector="&lt;webctrl id='ssrs' tag='IFRAME' class='embed-responsive-item' parentclass='embed-responsive embed-responsive-16by9' /&gt;" WaitForReady="COMPLETE">
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="89281698-d5f5-44a8-a0e9-1927901ead40" Selector="[string.Format(&quot;&lt;html app='{0}' title='* - Toyota Logistic System' /&gt;&lt;webctrl aaname='*' tag='DIV' class='ajs-message ajs-error ajs-visible' /&gt;&quot;, BrowserApp)]">
                                     <ui:Target.TimeoutMS>
                                       <InArgument x:TypeArguments="x:Int32" />
                                     </ui:Target.TimeoutMS>
+                                    <ui:Target.WaitForReady>
+                                      <InArgument x:TypeArguments="ui:WaitForReady" />
+                                    </ui:Target.WaitForReady>
                                   </ui:Target>
                                 </ui:UiElementExists.Target>
-                              </ui:UiElementExists>
-                              <If Condition="[DataExists]" DisplayName="If Data Exists" sap:VirtualizedContainerService.HintSize="829,1125" sap2010:WorkflowViewState.IdRef="If_2">
                                 <sap:WorkflowViewStateService.ViewState>
                                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                     <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                   </scg:Dictionary>
                                 </sap:WorkflowViewStateService.ViewState>
-                                <If.Then>
-                                  <Sequence DisplayName="Data Exists" sap:VirtualizedContainerService.HintSize="450,967" sap2010:WorkflowViewState.IdRef="Sequence_46">
-                                    <Sequence.Variables>
-                                      <Variable x:TypeArguments="si:FileInfo" Name="CBUReportFile" />
-                                    </Sequence.Variables>
+                              </ui:UiElementExists>
+                            </Sequence>
+                            <FlowStep.Next>
+                              <FlowDecision x:Name="__ReferenceID2" Condition="[Not TLSAlertNotifExists]" DisplayName="No Alert Detected" sap:VirtualizedContainerService.HintSize="100,87" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <av:Point x:Key="ShapeLocation">301.141666666667,491.5</av:Point>
+                                    <av:Size x:Key="ShapeSize">100,87</av:Size>
+                                    <av:PointCollection x:Key="FalseConnector">401.141666666667,535 510.141666666667,535</av:PointCollection>
+                                    <av:PointCollection x:Key="TrueConnector">301.141666666667,535 271.141666666667,535 271.141666666667,535.04 200,535.04</av:PointCollection>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <FlowDecision.True>
+                                  <FlowStep x:Name="__ReferenceID4">
                                     <sap:WorkflowViewStateService.ViewState>
                                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        <av:Point x:Key="ShapeLocation">0,493.54</av:Point>
+                                        <av:Size x:Key="ShapeSize">200,81</av:Size>
+                                        <av:PointCollection x:Key="ConnectorLocation">100,574.54 100,604.54 345.641666666667,604.54 345.641666666667,626.54</av:PointCollection>
                                       </scg:Dictionary>
                                     </sap:WorkflowViewStateService.ViewState>
-                                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="388,92" sap2010:WorkflowViewState.IdRef="LogMessage_5" Message="[&quot;Download CBU Report&quot;]" />
-                                    <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click 'Save Button Icon'" sap:VirtualizedContainerService.HintSize="388,157" sap2010:WorkflowViewState.IdRef="NClick_4" InteractionMode="DebuggerApi" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="843c708f-3596-4a43-9e08-bf2dd83927ab" Version="V3">
-                                      <uix:NClick.Target>
-                                        <uix:TargetAnchorable BrowserURL="http://10.85.72.37/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;InvoiceNumber=JSV-18327%2CJSV-18329%2C&amp;Username=tls_admin&amp;rs:embed=true&amp;rc:showbackbutton=true" DesignTimeRectangle="797, 130, 32, 32" DesignTimeScaleFactor="1" ElementType="Icon" FriendlyName="'IMG ReportViewerControl…'" FullSelectorArgument="&lt;webctrl id='ssrs' tag='IFRAME' /&gt;&lt;webctrl src='/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;amp;InvoiceNumber*' tag='IFRAME' /&gt;&lt;webctrl aaname='Export drop down menu' tableRow='1' tag='TABLE' /&gt;&lt;webctrl tableRow='1' tag='IMG' aaname='Export drop down menu' alt='Export drop down menu' id='ReportViewerControl_ctl05_ctl04_ctl00_ButtonImg' /&gt;" FuzzySelectorArgument="&lt;webctrl id='ssrs' tag='IFRAME' /&gt;&lt;webctrl src='/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;amp;InvoiceNumber*' tag='IFRAME' /&gt;&lt;webctrl aaname='Export drop down menu' tag='TABLE' /&gt;&lt;webctrl type='' tag='IMG' aaname='Export drop down menu' alt='Export drop down menu' id='ReportViewerControl_ctl05_ctl04_ctl00_ButtonImg' class='' /&gt;" Guid="697312bf-e2dd-42e3-ad6e-f3a7353aca17" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEWSURBVFhH7dUxDkRQEIDhPYhbUCpVVBoX0LiDI4hKRaNRcQGNioIzuIZ+NvOSJ5vNxLDJvtjNFH/sxjzvy67w2LYN7pSAuATEJSAuAXH9LqgsS4jj+KOqqiKvSXUaFAQB1HUNSZJAmqYwjuNhOIOzuAbXUtekOg3yfX/fqCgKcuY1nNFwXEvNUAmI6zagLMtgWZb7gBBjWdZnINu2T3UFhE3TdB1EnTvqCgj7D1DXdeQTWTcMw77OCAhv2CiK1PE9nEOwXmcMhDfsuq7q1fA6h7+QEVAYhtC2rfqsQdRmxkDzPIPrutA0jcLoF6fneWpTHf6VeZ7v33HmKyCs73twHId85hz1NZCJBMQlIC4BcQmI62agDZ5tOotRyx1t7QAAAABJRU5ErkJggg==" InformativeScreenshot="b71d729a8f438bc3f1a08d366f7d4ea2.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Total CBU Report - Toyota Logistic System' /&gt;" SearchSteps="Selector, Image" Version="V2" Visibility="Visible" WaitForReadyArgument="Complete" />
-                                      </uix:NClick.Target>
-                                    </uix:NClick>
-                                    <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click 'Excel'" sap:VirtualizedContainerService.HintSize="388,157" sap2010:WorkflowViewState.IdRef="NClick_5" InteractionMode="DebuggerApi" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="843c708f-3596-4a43-9e08-bf2dd83927ab" Version="V3">
-                                      <uix:NClick.Target>
-                                        <uix:TargetAnchorable BrowserURL="http://10.85.72.37/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;InvoiceNumber=JSV-18327%2CJSV-18329%2C&amp;Username=tls_admin&amp;rs:embed=true&amp;rc:showbackbutton=true" DesignTimeRectangle="796, 214, 170, 45" DesignTimeScaleFactor="1" FriendlyName="'Excel'" FullSelectorArgument="&lt;webctrl id='ssrs' tag='IFRAME' /&gt;&lt;webctrl src='/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;amp;InvoiceNumber*' tag='IFRAME' /&gt;&lt;webctrl idx='5' tableRow='4' tag='TABLE' /&gt;&lt;webctrl class='DisabledButton' tableRow='1' tag='DIV' parentclass='MenuBarBkGnd' parentid='ReportViewerControl_ctl05_ctl04_ctl00_Menu' visibleinnertext='Excel' /&gt;" FuzzySelectorArgument="&lt;webctrl id='ssrs' tag='IFRAME' /&gt;&lt;webctrl src='/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;amp;InvoiceNumber*' tag='IFRAME' /&gt;&lt;webctrl tag='TABLE' /&gt;&lt;webctrl class='DisabledButton' type='' tag='DIV' parentclass='MenuBarBkGnd' parentid='ReportViewerControl_ctl05_ctl04_ctl00_Menu' visibleinnertext='Excel' aaname=' &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9; &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;' check:text='Excel' /&gt;" Guid="c66219c6-00ab-49e6-b9ff-1bc16a3ecdd1" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAK4AAAAxCAYAAABDPJJ4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGCSURBVHhe7dfLEYMgFEZhOqQsSqEUq3Dtygbc3AQUJWqWPv7hfDNMoomujjfE9X1v4zga8HbTNFnqNVnDTa8s1pvXabjA2xEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJGmHO0TzLli3HKIdF4XbWXDOXL3CBXkRbrMuDPeGoAi3WTeHO0/idfjm8LzFYTlePi9T+vd75Xx1X8Jt1v0TtwvmfLTUahec+bXaY9Qxv0/nq7ir6wm3Xbftcestbgo2xG90JcAkBXmyDx6i352vHgrCbdYze9wcXL1FmAPdpu8mh7t7CFy5lnCb9Ui4eeKG6if/6zhZZ/+Czgi3WQ/ucQeL/vgHrD7Oe9yT6bwi3GbdtsfNse4jPD0u11TnU+z1vUrdhNusi8IFrkW4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kHQabnplsd68mLiQRLiQtIVr9gEvbTCSPlXM6gAAAABJRU5ErkJggg==" InformativeScreenshot="2ea4f0634e0d417fb21661abf236c8ba.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Total CBU Report - Toyota Logistic System' /&gt;" SearchSteps="Selector, FuzzySelector" Version="V2" Visibility="Visible" />
-                                      </uix:NClick.Target>
-                                    </uix:NClick>
-                                    <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window Save As" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="WindowScope_2" InformativeScreenshot="97d25ca03e190c6909879c400ef13c9a" Selector="[string.Format(&quot;&lt;wnd app='{0}' cls='#32770' title='Save As' /&gt;&quot;, BrowserApp)]">
-                                      <ui:WindowScope.Body>
-                                        <ActivityAction x:TypeArguments="x:Object">
-                                          <ActivityAction.Argument>
-                                            <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
-                                          </ActivityAction.Argument>
-                                          <Sequence DisplayName="Save CBU Report file" sap:VirtualizedContainerService.HintSize="496,609" sap2010:WorkflowViewState.IdRef="Sequence_45">
+                                    <Sequence DisplayName="Check if data show up" sap:VirtualizedContainerService.HintSize="200,81" sap2010:WorkflowViewState.IdRef="Sequence_50">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <ui:UiElementExists DisplayName="Element Exists - Data Exists" Exists="[DataExists]" sap:VirtualizedContainerService.HintSize="388,87" sap2010:WorkflowViewState.IdRef="UiElementExists_5">
+                                        <ui:UiElementExists.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="57f51b87-1725-4e20-b655-2a4c4aaedbb7" Selector="&lt;webctrl id='ssrs' tag='IFRAME' class='embed-responsive-item' parentclass='embed-responsive embed-responsive-16by9' /&gt;" WaitForReady="COMPLETE">
+                                            <ui:Target.TimeoutMS>
+                                              <InArgument x:TypeArguments="x:Int32" />
+                                            </ui:Target.TimeoutMS>
+                                          </ui:Target>
+                                        </ui:UiElementExists.Target>
+                                      </ui:UiElementExists>
+                                    </Sequence>
+                                    <FlowStep.Next>
+                                      <FlowDecision x:Name="__ReferenceID5" Condition="[DataExists]" DisplayName="Data Exists?" sap:VirtualizedContainerService.HintSize="70,87" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                            <av:Point x:Key="ShapeLocation">310.641666666667,626.54</av:Point>
+                                            <av:Size x:Key="ShapeSize">70,87</av:Size>
+                                            <av:PointCollection x:Key="TrueConnector">310.641666666667,670.04 280.641666666667,670.04 280.641666666667,670 200,670</av:PointCollection>
+                                            <av:PointCollection x:Key="FalseConnector">380.641666666667,670.04 510.641666666667,670.04</av:PointCollection>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <FlowDecision.True>
+                                          <FlowStep x:Name="__ReferenceID6">
                                             <sap:WorkflowViewStateService.ViewState>
                                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                <av:Point x:Key="ShapeLocation">0,628.5</av:Point>
+                                                <av:Size x:Key="ShapeSize">200,81</av:Size>
+                                                <av:PointCollection x:Key="ConnectorLocation">100,709.5 100,761.5</av:PointCollection>
                                               </scg:Dictionary>
                                             </sap:WorkflowViewStateService.ViewState>
-                                            <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'File Name'" EmptyField="True" sap:VirtualizedContainerService.HintSize="434,135" sap2010:WorkflowViewState.IdRef="TypeInto_2" SimulateType="True" Text="[in_Config(&quot;Input_Folder&quot;).ToString.Trim+&quot;\&quot;+Now.ToString(&quot;ddMMyyyy&quot;)+&quot;\&quot;+Now.ToString(&quot;HHmmss&quot;)+&quot;_&quot;+in_Config(&quot;CBUReport_FileName&quot;).ToString.Trim]">
-                                              <ui:TypeInto.Target>
-                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="abfedee2-9df8-4276-81b6-d3860a6e23e3" InformativeScreenshot="cc5a7e942335653404622aea2b68dc26" Selector="&lt;wnd aaname='Explorer Pane' cls='DirectUIHWND' /&gt;&lt;wnd aaname='File name:' cls='ComboBox' /&gt;&lt;wnd ctrlid='1001' /&gt;">
-                                                  <ui:Target.TimeoutMS>
-                                                    <InArgument x:TypeArguments="x:Int32" />
-                                                  </ui:Target.TimeoutMS>
-                                                  <ui:Target.WaitForReady>
-                                                    <InArgument x:TypeArguments="ui:WaitForReady" />
-                                                  </ui:Target.WaitForReady>
-                                                </ui:Target>
-                                              </ui:TypeInto.Target>
-                                            </ui:TypeInto>
-                                            <ui:GetLastDownloadedFile FileResource="{x:Null}" IgnoreFiles="{x:Null}" Timeout="{x:Null}" DisplayName="Wait for Download" DownloadFolder="[in_Config(&quot;Input_Folder&quot;).ToString.Trim+&quot;/&quot;+Now.ToString(&quot;ddMMyyyy&quot;)]" File="[CBUReportFile]" sap:VirtualizedContainerService.HintSize="434,363" sap2010:WorkflowViewState.IdRef="GetLastDownloadedFile_2">
-                                              <ui:GetLastDownloadedFile.Body>
-                                                <ActivityAction>
-                                                  <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'Save'" sap:VirtualizedContainerService.HintSize="334,107" sap2010:WorkflowViewState.IdRef="Click_2" KeyModifiers="None" MouseButton="BTN_LEFT">
-                                                    <ui:Click.CursorPosition>
-                                                      <ui:CursorPosition Position="Center">
-                                                        <ui:CursorPosition.OffsetX>
-                                                          <InArgument x:TypeArguments="x:Int32" />
-                                                        </ui:CursorPosition.OffsetX>
-                                                        <ui:CursorPosition.OffsetY>
-                                                          <InArgument x:TypeArguments="x:Int32" />
-                                                        </ui:CursorPosition.OffsetY>
-                                                      </ui:CursorPosition>
-                                                    </ui:Click.CursorPosition>
-                                                    <ui:Click.Target>
-                                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="64cdec81-10df-49ca-aa08-1969c9db9e25" InformativeScreenshot="f692fc017c43b0291a6d1f9eca5d4841" Selector="&lt;wnd ctrlid='1' title='&amp;amp;Save' /&gt;">
-                                                        <ui:Target.TimeoutMS>
-                                                          <InArgument x:TypeArguments="x:Int32" />
-                                                        </ui:Target.TimeoutMS>
-                                                        <ui:Target.WaitForReady>
-                                                          <InArgument x:TypeArguments="ui:WaitForReady" />
-                                                        </ui:Target.WaitForReady>
-                                                      </ui:Target>
-                                                    </ui:Click.Target>
-                                                  </ui:Click>
-                                                </ActivityAction>
-                                              </ui:GetLastDownloadedFile.Body>
+                                            <Sequence DisplayName="Download CBU Report" sap:VirtualizedContainerService.HintSize="200,81" sap2010:WorkflowViewState.IdRef="Sequence_51">
                                               <sap:WorkflowViewStateService.ViewState>
                                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                                                   <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                                 </scg:Dictionary>
                                               </sap:WorkflowViewStateService.ViewState>
-                                            </ui:GetLastDownloadedFile>
-                                          </Sequence>
-                                        </ActivityAction>
-                                      </ui:WindowScope.Body>
+                                              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="492,92" sap2010:WorkflowViewState.IdRef="LogMessage_7" Message="[&quot;Download CBU Report&quot;]" />
+                                              <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="492,640" sap2010:WorkflowViewState.IdRef="RetryScope_3">
+                                                <ui:RetryScope.ActivityBody>
+                                                  <ActivityAction>
+                                                    <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="450,465" sap2010:WorkflowViewState.IdRef="Sequence_53">
+                                                      <sap:WorkflowViewStateService.ViewState>
+                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                        </scg:Dictionary>
+                                                      </sap:WorkflowViewStateService.ViewState>
+                                                      <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click 'Save Button Icon'" sap:VirtualizedContainerService.HintSize="388,157" sap2010:WorkflowViewState.IdRef="NClick_8" InteractionMode="DebuggerApi" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="843c708f-3596-4a43-9e08-bf2dd83927ab" Version="V3">
+                                                        <uix:NClick.Target>
+                                                          <uix:TargetAnchorable BrowserURL="http://10.85.72.37/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;InvoiceNumber=JSV-18327%2CJSV-18329%2C&amp;Username=tls_admin&amp;rs:embed=true&amp;rc:showbackbutton=true" DesignTimeRectangle="797, 130, 32, 32" DesignTimeScaleFactor="1" ElementType="Icon" FriendlyName="'IMG ReportViewerControl…'" FullSelectorArgument="&lt;webctrl id='ssrs' tag='IFRAME' /&gt;&lt;webctrl src='/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;amp;InvoiceNumber*' tag='IFRAME' /&gt;&lt;webctrl aaname='Export drop down menu' tableRow='1' tag='TABLE' /&gt;&lt;webctrl tableRow='1' tag='IMG' aaname='Export drop down menu' alt='Export drop down menu' id='ReportViewerControl_ctl05_ctl04_ctl00_ButtonImg' /&gt;" FuzzySelectorArgument="&lt;webctrl id='ssrs' tag='IFRAME' /&gt;&lt;webctrl src='/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;amp;InvoiceNumber*' tag='IFRAME' /&gt;&lt;webctrl aaname='Export drop down menu' tag='TABLE' /&gt;&lt;webctrl type='' tag='IMG' aaname='Export drop down menu' alt='Export drop down menu' id='ReportViewerControl_ctl05_ctl04_ctl00_ButtonImg' class='' /&gt;" Guid="697312bf-e2dd-42e3-ad6e-f3a7353aca17" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEWSURBVFhH7dUxDkRQEIDhPYhbUCpVVBoX0LiDI4hKRaNRcQGNioIzuIZ+NvOSJ5vNxLDJvtjNFH/sxjzvy67w2LYN7pSAuATEJSAuAXH9LqgsS4jj+KOqqiKvSXUaFAQB1HUNSZJAmqYwjuNhOIOzuAbXUtekOg3yfX/fqCgKcuY1nNFwXEvNUAmI6zagLMtgWZb7gBBjWdZnINu2T3UFhE3TdB1EnTvqCgj7D1DXdeQTWTcMw77OCAhv2CiK1PE9nEOwXmcMhDfsuq7q1fA6h7+QEVAYhtC2rfqsQdRmxkDzPIPrutA0jcLoF6fneWpTHf6VeZ7v33HmKyCs73twHId85hz1NZCJBMQlIC4BcQmI62agDZ5tOotRyx1t7QAAAABJRU5ErkJggg==" InformativeScreenshot="b71d729a8f438bc3f1a08d366f7d4ea2.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Total CBU Report - Toyota Logistic System' /&gt;" SearchSteps="Selector, Image" Version="V2" Visibility="Visible" WaitForReadyArgument="Complete" />
+                                                        </uix:NClick.Target>
+                                                      </uix:NClick>
+                                                      <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click 'Excel'" sap:VirtualizedContainerService.HintSize="388,157" sap2010:WorkflowViewState.IdRef="NClick_9" InteractionMode="DebuggerApi" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="843c708f-3596-4a43-9e08-bf2dd83927ab" Version="V3">
+                                                        <uix:NClick.Target>
+                                                          <uix:TargetAnchorable BrowserURL="http://10.85.72.37/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;InvoiceNumber=JSV-18327%2CJSV-18329%2C&amp;Username=tls_admin&amp;rs:embed=true&amp;rc:showbackbutton=true" DesignTimeRectangle="796, 214, 170, 45" DesignTimeScaleFactor="1" FriendlyName="'Excel'" FullSelectorArgument="&lt;webctrl id='ssrs' tag='IFRAME' /&gt;&lt;webctrl src='/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;amp;InvoiceNumber*' tag='IFRAME' /&gt;&lt;webctrl idx='5' tableRow='4' tag='TABLE' /&gt;&lt;webctrl class='DisabledButton' tableRow='1' tag='DIV' parentclass='MenuBarBkGnd' parentid='ReportViewerControl_ctl05_ctl04_ctl00_Menu' visibleinnertext='Excel' /&gt;" FuzzySelectorArgument="&lt;webctrl id='ssrs' tag='IFRAME' /&gt;&lt;webctrl src='/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;amp;InvoiceNumber*' tag='IFRAME' /&gt;&lt;webctrl tag='TABLE' /&gt;&lt;webctrl class='DisabledButton' type='' tag='DIV' parentclass='MenuBarBkGnd' parentid='ReportViewerControl_ctl05_ctl04_ctl00_Menu' visibleinnertext='Excel' aaname=' &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9; &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;' check:text='Excel' /&gt;" Guid="c66219c6-00ab-49e6-b9ff-1bc16a3ecdd1" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAK4AAAAxCAYAAABDPJJ4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGCSURBVHhe7dfLEYMgFEZhOqQsSqEUq3Dtygbc3AQUJWqWPv7hfDNMoomujjfE9X1v4zga8HbTNFnqNVnDTa8s1pvXabjA2xEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJGmHO0TzLli3HKIdF4XbWXDOXL3CBXkRbrMuDPeGoAi3WTeHO0/idfjm8LzFYTlePi9T+vd75Xx1X8Jt1v0TtwvmfLTUahec+bXaY9Qxv0/nq7ir6wm3Xbftcestbgo2xG90JcAkBXmyDx6i352vHgrCbdYze9wcXL1FmAPdpu8mh7t7CFy5lnCb9Ui4eeKG6if/6zhZZ/+Czgi3WQ/ucQeL/vgHrD7Oe9yT6bwi3GbdtsfNse4jPD0u11TnU+z1vUrdhNusi8IFrkW4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kHQabnplsd68mLiQRLiQtIVr9gEvbTCSPlXM6gAAAABJRU5ErkJggg==" InformativeScreenshot="2ea4f0634e0d417fb21661abf236c8ba.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Total CBU Report - Toyota Logistic System' /&gt;" SearchSteps="Selector, FuzzySelector" Version="V2" Visibility="Visible" />
+                                                        </uix:NClick.Target>
+                                                      </uix:NClick>
+                                                    </Sequence>
+                                                  </ActivityAction>
+                                                </ui:RetryScope.ActivityBody>
+                                                <ui:RetryScope.Condition>
+                                                  <ActivityFunc x:TypeArguments="x:Boolean" />
+                                                </ui:RetryScope.Condition>
+                                              </ui:RetryScope>
+                                              <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window Save As" sap:VirtualizedContainerService.HintSize="492,485" sap2010:WorkflowViewState.IdRef="WindowScope_3" InformativeScreenshot="97d25ca03e190c6909879c400ef13c9a" Selector="[string.Format(&quot;&lt;wnd app='{0}' cls='#32770' title='Save As' /&gt;&quot;, BrowserApp)]">
+                                                <ui:WindowScope.Body>
+                                                  <ActivityAction x:TypeArguments="x:Object">
+                                                    <ActivityAction.Argument>
+                                                      <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                                    </ActivityAction.Argument>
+                                                    <Sequence DisplayName="Save CBU Report file" sap:VirtualizedContainerService.HintSize="450,338" sap2010:WorkflowViewState.IdRef="Sequence_52">
+                                                      <sap:WorkflowViewStateService.ViewState>
+                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                        </scg:Dictionary>
+                                                      </sap:WorkflowViewStateService.ViewState>
+                                                      <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'File Name'" EmptyField="True" sap:VirtualizedContainerService.HintSize="388,135" sap2010:WorkflowViewState.IdRef="TypeInto_3" SimulateType="True" Text="[in_Config(&quot;Input_Folder&quot;).ToString.Trim+&quot;\&quot;+Now.ToString(&quot;yyMMdd&quot;)+&quot;\&quot;+Now.ToString(&quot;HHmmss&quot;)+&quot;_&quot;+in_Config(&quot;CBUReport_FileName&quot;).ToString.Trim]">
+                                                        <ui:TypeInto.Target>
+                                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="abfedee2-9df8-4276-81b6-d3860a6e23e3" InformativeScreenshot="cc5a7e942335653404622aea2b68dc26" Selector="&lt;wnd aaname='Explorer Pane' cls='DirectUIHWND' /&gt;&lt;wnd aaname='File name:' cls='ComboBox' /&gt;&lt;wnd ctrlid='1001' /&gt;">
+                                                            <ui:Target.TimeoutMS>
+                                                              <InArgument x:TypeArguments="x:Int32" />
+                                                            </ui:Target.TimeoutMS>
+                                                            <ui:Target.WaitForReady>
+                                                              <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                            </ui:Target.WaitForReady>
+                                                          </ui:Target>
+                                                        </ui:TypeInto.Target>
+                                                      </ui:TypeInto>
+                                                      <ui:GetLastDownloadedFile FileResource="{x:Null}" IgnoreFiles="{x:Null}" Timeout="{x:Null}" DisplayName="Wait for Download" DownloadFolder="[in_Config(&quot;Input_Folder&quot;).ToString.Trim+&quot;\&quot;+Now.ToString(&quot;yyMMdd&quot;)]" File="[CBUReportFile]" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="GetLastDownloadedFile_3">
+                                                        <ui:GetLastDownloadedFile.Body>
+                                                          <ActivityAction>
+                                                            <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'Save'" sap:VirtualizedContainerService.HintSize="334,107" sap2010:WorkflowViewState.IdRef="Click_3" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                                              <ui:Click.CursorPosition>
+                                                                <ui:CursorPosition Position="Center">
+                                                                  <ui:CursorPosition.OffsetX>
+                                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                                  </ui:CursorPosition.OffsetX>
+                                                                  <ui:CursorPosition.OffsetY>
+                                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                                  </ui:CursorPosition.OffsetY>
+                                                                </ui:CursorPosition>
+                                                              </ui:Click.CursorPosition>
+                                                              <ui:Click.Target>
+                                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="64cdec81-10df-49ca-aa08-1969c9db9e25" InformativeScreenshot="f692fc017c43b0291a6d1f9eca5d4841" Selector="&lt;wnd ctrlid='1' title='&amp;amp;Save' /&gt;">
+                                                                  <ui:Target.TimeoutMS>
+                                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                                  </ui:Target.TimeoutMS>
+                                                                  <ui:Target.WaitForReady>
+                                                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                  </ui:Target.WaitForReady>
+                                                                </ui:Target>
+                                                              </ui:Click.Target>
+                                                            </ui:Click>
+                                                          </ActivityAction>
+                                                        </ui:GetLastDownloadedFile.Body>
+                                                        <sap:WorkflowViewStateService.ViewState>
+                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                          </scg:Dictionary>
+                                                        </sap:WorkflowViewStateService.ViewState>
+                                                      </ui:GetLastDownloadedFile>
+                                                    </Sequence>
+                                                  </ActivityAction>
+                                                </ui:WindowScope.Body>
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                              </ui:WindowScope>
+                                              <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Buttons="YesNo" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="492,85" sap2010:WorkflowViewState.IdRef="MessageBox_2" Text="[&quot;Continue Execution?&quot;]" />
+                                            </Sequence>
+                                            <FlowStep.Next>
+                                              <FlowStep x:Name="__ReferenceID7">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <av:Point x:Key="ShapeLocation">0,761.5</av:Point>
+                                                    <av:Size x:Key="ShapeSize">200,52</av:Size>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="CBUReportFileProcess.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="CBUReportFileProcess.xaml">
+                                                  <ui:InvokeWorkflowFile.Arguments>
+                                                    <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+                                                    <InArgument x:TypeArguments="sd:DataTable" x:Key="in_DTTLSCBU">[in_DTTLSCBU]</InArgument>
+                                                    <InArgument x:TypeArguments="x:String" x:Key="in_CBUReportFile">[CBUReportFile.FullName]</InArgument>
+                                                    <InArgument x:TypeArguments="x:Boolean" x:Key="in_QueueProcess">[in_QueueProcess]</InArgument>
+                                                    <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">[in_TransactionItem]</InArgument>
+                                                    <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_DTSummary">[io_DTSummary]</InOutArgument>
+                                                  </ui:InvokeWorkflowFile.Arguments>
+                                                </ui:InvokeWorkflowFile>
+                                              </FlowStep>
+                                            </FlowStep.Next>
+                                          </FlowStep>
+                                        </FlowDecision.True>
+                                        <FlowDecision.False>
+                                          <FlowStep x:Name="__ReferenceID8">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <av:Point x:Key="ShapeLocation">510.641666666667,643.54</av:Point>
+                                                <av:Size x:Key="ShapeSize">200,52</av:Size>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <ui:LogMessage DisplayName="Log Message - Data Doesn't Exists" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Error" Message="[&quot;Can't downoad CBU Report&quot;]" />
+                                          </FlowStep>
+                                        </FlowDecision.False>
+                                      </FlowDecision>
+                                    </FlowStep.Next>
+                                  </FlowStep>
+                                </FlowDecision.True>
+                                <FlowDecision.False>
+                                  <FlowStep x:Name="__ReferenceID3">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <av:Point x:Key="ShapeLocation">510.141666666667,494.5</av:Point>
+                                        <av:Size x:Key="ShapeSize">200,81</av:Size>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <Sequence DisplayName="Throw Alert" sap:VirtualizedContainerService.HintSize="200,81" sap2010:WorkflowViewState.IdRef="Sequence_49">
+                                      <Sequence.Variables>
+                                        <Variable x:TypeArguments="x:String" Name="Alert" />
+                                      </Sequence.Variables>
                                       <sap:WorkflowViewStateService.ViewState>
                                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                                           <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                         </scg:Dictionary>
                                       </sap:WorkflowViewStateService.ViewState>
-                                    </ui:WindowScope>
-                                    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Buttons="YesNo" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="388,85" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;Continue Execution?&quot;]" />
-                                    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="CBUReportFileProcess.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="388,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="CBUReportFileProcess.xaml">
-                                      <ui:InvokeWorkflowFile.Arguments>
-                                        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
-                                          <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="in_Config" />
-                                        </InArgument>
-                                        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_DTTLSCBU">
-                                          <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="in_DTTLSCBU" />
-                                        </InArgument>
-                                        <InArgument x:TypeArguments="x:String" x:Key="in_CBUReportFile">
-                                          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="CBUReportFile.FullName" />
-                                        </InArgument>
-                                        <InArgument x:TypeArguments="x:Boolean" x:Key="in_QueueProcess">
-                                          <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="in_QueueProcess" />
-                                        </InArgument>
-                                        <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">
-                                          <mva:VisualBasicValue x:TypeArguments="ui:QueueItem" ExpressionText="in_TransactionItem" />
-                                        </InArgument>
-                                        <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_DTSummary">
-                                          <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="io_DTSummary" />
-                                        </InOutArgument>
-                                      </ui:InvokeWorkflowFile.Arguments>
-                                    </ui:InvokeWorkflowFile>
-                                  </Sequence>
-                                </If.Then>
-                                <If.Else>
-                                  <ui:LogMessage DisplayName="Log Message - Data Doesn't Exists" sap:VirtualizedContainerService.HintSize="334,92" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Warn" Message="[&quot;Can't downoad CBU Report&quot;]" />
-                                </If.Else>
-                              </If>
-                            </Sequence>
-                          </ActivityAction>
-                        </ui:RetryScope.ActivityBody>
-                        <ui:RetryScope.Condition>
-                          <ActivityFunc x:TypeArguments="x:Boolean" />
-                        </ui:RetryScope.Condition>
-                        <sap:WorkflowViewStateService.ViewState>
-                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                          </scg:Dictionary>
-                        </sap:WorkflowViewStateService.ViewState>
-                      </ui:RetryScope>
-                    </If.Then>
-                    <If.Else>
-                      <Sequence DisplayName="Throw Alert" sap:VirtualizedContainerService.HintSize="450,81" sap2010:WorkflowViewState.IdRef="Sequence_43">
-                        <sap:WorkflowViewStateService.ViewState>
-                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                          </scg:Dictionary>
-                        </sap:WorkflowViewStateService.ViewState>
-                        <uix:NGetText DisplayName="Get Text" sap:VirtualizedContainerService.HintSize="388,157" sap2010:WorkflowViewState.IdRef="NGetText_1" TextString="[Alert]" Version="V3">
-                          <uix:NGetText.Target>
-                            <uix:TargetAnchorable DesignTimeRectangle="0, 0, 0, 0" FullSelectorArgument="&lt;webctrl aaname='*' tag='DIV' class='ajs-message ajs-error ajs-visible' innertext='*' /&gt;" Guid="4be45e8e-8e2b-4303-9629-2337e2248b7f" SearchSteps="Selector" Visibility="Interactive" />
-                          </uix:NGetText.Target>
-                          <sap:WorkflowViewStateService.ViewState>
-                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                            </scg:Dictionary>
-                          </sap:WorkflowViewStateService.ViewState>
-                        </uix:NGetText>
-                        <Throw Exception="[New Exception(Alert)]" sap:VirtualizedContainerService.HintSize="388,25" sap2010:WorkflowViewState.IdRef="Throw_1" />
-                      </Sequence>
-                    </If.Else>
-                  </If>
-                </Sequence>
+                                      <uix:NGetText DisplayName="Get Text" sap:VirtualizedContainerService.HintSize="388,157" sap2010:WorkflowViewState.IdRef="NGetText_2" TextString="[Alert]" Version="V3">
+                                        <uix:NGetText.Target>
+                                          <uix:TargetAnchorable DesignTimeRectangle="0, 0, 0, 0" FullSelectorArgument="&lt;webctrl aaname='*' tag='DIV' class='ajs-message ajs-error ajs-visible' innertext='*' /&gt;" Guid="4be45e8e-8e2b-4303-9629-2337e2248b7f" SearchSteps="Selector" Visibility="Interactive" />
+                                        </uix:NGetText.Target>
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                      </uix:NGetText>
+                                      <Throw Exception="[New Exception(Alert)]" sap:VirtualizedContainerService.HintSize="388,25" sap2010:WorkflowViewState.IdRef="Throw_2" />
+                                    </Sequence>
+                                  </FlowStep>
+                                </FlowDecision.False>
+                              </FlowDecision>
+                            </FlowStep.Next>
+                          </FlowStep>
+                        </FlowStep.Next>
+                      </FlowStep>
+                    </FlowStep.Next>
+                  </FlowStep>
+                  <x:Reference>__ReferenceID0</x:Reference>
+                  <x:Reference>__ReferenceID1</x:Reference>
+                  <x:Reference>__ReferenceID2</x:Reference>
+                  <x:Reference>__ReferenceID3</x:Reference>
+                  <x:Reference>__ReferenceID4</x:Reference>
+                  <x:Reference>__ReferenceID5</x:Reference>
+                  <x:Reference>__ReferenceID6</x:Reference>
+                  <x:Reference>__ReferenceID7</x:Reference>
+                  <x:Reference>__ReferenceID8</x:Reference>
+                </Flowchart>
               </ActivityAction>
             </uix:NApplicationCard.Body>
             <uix:NApplicationCard.TargetApp>

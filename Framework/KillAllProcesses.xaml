@@ -65,7 +65,7 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log message (Kill processes)" sap:VirtualizedContainerService.HintSize="486,92" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace" Message="[&quot;Killing processes...&quot;]" />
-    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="486,370" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[{&quot;chrome&quot;,&quot;firefox&quot;,&quot;excel&quot;}]">
+    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each Process" sap:VirtualizedContainerService.HintSize="486,370" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[{&quot;chrome&quot;,&quot;firefox&quot;,&quot;excel&quot;}]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="x:String">
           <ActivityAction.Argument>
