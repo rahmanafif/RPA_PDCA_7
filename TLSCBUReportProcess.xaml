@@ -1,0 +1,419 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="TLSCBUReportProcess" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_DTTLSCBU" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_QueueProcess" Type="InArgument(x:Boolean)" />
+    <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
+    <x:Property Name="io_DTSummary" Type="InOutArgument(sd:DataTable)" />
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>1618,2876</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.UIAutomationNext.Enums</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>UiPath.UIAutomationNext.Contracts</x:String>
+      <x:String>UiPath.UIAutomationNext.Models.CV</x:String>
+      <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities</x:String>
+      <x:String>UiPath.Platform.ObjectLibrary</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>UiPath.Database</x:String>
+      <x:String>UiPath.Database.Activities</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities.Models</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.Windows.Forms</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>UiPath.Database</AssemblyReference>
+      <AssemblyReference>UiPath.Database.Activities</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Data.Entity</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="TLS CBU Report Process" sap:VirtualizedContainerService.HintSize="1628,2811" sap2010:WorkflowViewState.IdRef="Sequence_40">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Default="chrome.exe" Name="BrowserApp" />
+      <Variable x:TypeArguments="x:String" Name="AllInvoiceNumber" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="1566,2700" sap2010:WorkflowViewState.IdRef="RetryScope_1">
+      <ui:RetryScope.ActivityBody>
+        <ActivityAction>
+          <uix:NApplicationCard AttachMode="SingleWindow" CloseMode="Never" DisplayName="Use Browser Home - Toyota Logistic System" sap:VirtualizedContainerService.HintSize="1524,2525" sap2010:WorkflowViewState.IdRef="NApplicationCard_5" OpenMode="Never" ScopeGuid="843c708f-3596-4a43-9e08-bf2dd83927ab" Version="V2">
+            <uix:NApplicationCard.Body>
+              <ActivityAction x:TypeArguments="x:Object">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Input Invoice Number and try download CBU Report" sap:VirtualizedContainerService.HintSize="1490,2308" sap2010:WorkflowViewState.IdRef="Sequence_19">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="x:Boolean" Name="TLSAlertNotifExists" />
+                    <Variable x:TypeArguments="x:String" Name="Alert" />
+                  </Sequence.Variables>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <uix:NGoToUrl DisplayName="Go To URL - CBU Report" sap:VirtualizedContainerService.HintSize="1428,52" sap2010:WorkflowViewState.IdRef="NGoToUrl_3" Url="[in_Config(&quot;TLS_URL&quot;).ToString.Trim+&quot;/&quot;+in_Config(&quot;TLS_CBU_Report&quot;).ToString.Trim]" Version="V3">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </uix:NGoToUrl>
+                  <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[in_DTTLSCBU]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="1428,52" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+                    <ui:ForEachRow.Body>
+                      <ActivityAction x:TypeArguments="sd:DataRow">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+                        </ActivityAction.Argument>
+                        <Assign sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_1">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[AllInvoiceNumber]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">[AllInvoiceNumber+CurrentRow("TLS_INVOICE_NUMBER").ToString.Trim+","]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </ActivityAction>
+                    </ui:ForEachRow.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ForEachRow>
+                  <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into 'Invoice No'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="1428,52" sap2010:WorkflowViewState.IdRef="NTypeInto_6" InteractionMode="Simulate" ScopeIdentifier="843c708f-3596-4a43-9e08-bf2dd83927ab" Text="[AllInvoiceNumber]" Version="V3">
+                    <uix:NTypeInto.Target>
+                      <uix:TargetAnchorable BrowserURL="http://10.85.72.36:3031/cbu-report" DesignTimeRectangle="454, 223, 415, 74" DesignTimeScaleFactor="1" ElementType="InputBox" FriendlyName="'TEXTAREA'" FullSelectorArgument="&lt;webctrl tag='TEXTAREA' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='TEXTAREA' type='' class='form-control ng-pristine ng-untouched ng-valid ng-empty' aaname='' /&gt;" Guid="a482fccf-2ded-49ae-a8f7-50ea760db33a" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAaMAAABOCAYAAACNOHkcAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGJSURBVHhe7dkxTsRAEEVBTuvT+io4IVrJstEEILSsN/O8pEr6Wecv6I/Pr8dpZmZWTozMzCzfb4zWdTUzM5u6lzHats3MzGzKLmO07/t5HIeZmdmtG725jNE4AIC7jd6IEQApMQIgJ0YA5MQIgJwYAZATIwByYgRATowAyIkRADkxAiAnRgDkxAiAnBgBkBMjAHJiBEBOjADIiREAOTECICdGAOTECICcGAGQEyMAcmIEQE6MAMiJEQA5MQIgJ0YA5MQIgJwYAZATIwByYgRATowAyIkRADkxAiAnRgDkxAiAnBgBkBMjAHJiBEBOjADIiREAOTECICdGAOTECICcGAGQEyMAcmIEQE6MAMiJEQA5MQIgJ0YA5MQIgJwYAZATIwByYgRATowAyIkRADkxAiAnRgDkxAiAnBgBkFqWRYwA6IwQDWIEQOInRIMYATDd3xANYgTAVM8h8jMCYKpXIRrECIAprkI0iBEAt3sXokGMAMi9jZGZmdnM/YuRmZlZNTEyM7N4j/MbKP/9IYqZJooAAAAASUVORK5CYII=" InformativeScreenshot="f013849bc25ee51299ae599a073f5a57.png" IsResponsive="True" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Total CBU Report - Toyota Logistic System' /&gt;" SearchSteps="Selector, FuzzySelector" Version="V2" Visibility="Interactive">
+                        <uix:TargetAnchorable.Anchors>
+                          <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                            <uix:Target DesignTimeRectangle="276, 223, 61, 27" ElementType="Text" FriendlyName="'Invoice No'" FullSelectorArgument="&lt;webctrl tag='LABEL' aaname='Invoice No' class='control-label' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='LABEL' aaname='Invoice No' class='control-label' type='' check:text='Invoice No' /&gt;" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAEEAAAAfCAYAAAC4c6DCAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAG+SURBVGhD7ZM9SwNREEX96WnSxFYFRUTsBFEQEQQrCyGFiFjYqKAiBEEQUqVa5yzcZTJ5G2FZYpEpDu6bjzvz7jMb39NZte6kCUaaYKQJRppgpAlGmmCkCUaaYKQJRppgpAlGmmCs1IT7x6dqOBxWZ+cXxfx/0ZigBQ8OjxaK+qJvE9AZDAa1JtrEPr9+qq3tnRq+Y0+JlZrQNzIBtHevJvAXoeOT02YQQzVkNNqsXj8mde3N7Xghrx7/SnFGrEWnFG97GOahxy6ao17gmzrt16a31AQaShdXTktz1hJ8qy72lWYoJ116fFw97KFdhUy4vLpudKMJsd8/mHSWmsCZOGcN5Fx6eXh6fquXl4b6ZJifwQVjLcR4vJSv9Ttp3/Hdw1y9r/H6Xq+TCV6IocTJRw2QYdGEUi0oTo/nLxPUx8/XmxDvQczniXUywed39/abeNRQXxcTYrxE207+pRVTTW//CZz1wv6V5DJDGBbPfkbMAfGX98lcXPuViDtJ3++kPamlJp6hswksyKJRUJcjDv4ycYbXaNMWfoaIOwHa1MsEYv7BSlqNCetMmmCkCUaaYKQJRppgpAlGmjCdVb+reAszhqy40gAAAABJRU5ErkJggg==" SearchSteps="Selector, FuzzySelector" />
+                          </scg:List>
+                        </uix:TargetAnchorable.Anchors>
+                      </uix:TargetAnchorable>
+                    </uix:NTypeInto.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </uix:NTypeInto>
+                  <uix:NClick ActivateBefore="True" ClickType="Single" DelayBefore="2" DisplayName="Click 'Generate'" sap:VirtualizedContainerService.HintSize="1428,52" sap2010:WorkflowViewState.IdRef="NClick_1" InteractionMode="HardwareEvents" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="843c708f-3596-4a43-9e08-bf2dd83927ab" Version="V3">
+                    <uix:NClick.Target>
+                      <uix:TargetAnchorable BrowserURL="http://10.85.72.36:3031/cbu-report" DesignTimeRectangle="1084, 449, 125, 34" DesignTimeScaleFactor="1" ElementType="Button" FriendlyName="'Generate'" FullSelectorArgument="&lt;webctrl aaname=' Generate ' parentname='me.cbuReportForm' tag='BUTTON' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname=' Generate ' parentname='me.cbuReportForm' tag='BUTTON' type='' class='btn btn-primary' check:innerText='Generate' /&gt;" Guid="3968847b-c672-4738-b693-b2d731ac96cc" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAIEAAAAmCAYAAADjufgGAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHmSURBVHhe7ZWxSgNBEIZ9IhsfysoXEHwSLa1sLO3sxUYrm1hIsAgYQohKEoLrfcHRYdxNbIK73L/wcZedub1l5rvN3ni2SKLfSALxI8H+0bnoGVkJDo6vRE+QBEISCEkgOiSBkARCEogOSSAkgZAEokMSiLYkOL0epOXqI9ngnrlc7n9weTtMo+k8HZ7dZOO10owEFDg2nfvh+L2aokuCHXJycZ9e56t1kXNxg7gN8nmOeWSZvC3Tw/P0K5rSzeDl+zl/wnjReJ7n7p4m69jjaLae52rD1uHqh+WW9lQTTUhAIbcVkMaRYw30X6U12TfG1gPumbN1aLyP+a+bZvvc0jv/Eq+FZiTwxfNfos3THGsy0ECaSQPAGhtjcW2u/Gbe59m6nhiPa23ak83VQNMngS96PI4ZdrTDJglyoyQBc+zFhv/7yEkQh8+vhSYksMJTZD8fJfBfnWebBL5xnigBOeTyrlw8J0FpTzXRhARAQeNX5IvOvP//9TBXkoD7nGAxj98mgeVy3XQSMF/aU000IwFQ5Dh882LcC1KSgN9caaYNGkdOzIvvIMY7LG6SMOy0KO3J1quBpiQQu0ESCEkgJIHokARCEghJIDokgZAEQhKIDkkgJIHYIIHoF78kEP1FEvSeRfoEQcl+3ng1CqMAAAAASUVORK5CYII=" InformativeScreenshot="61a06ada10ff2d95b48e10c39fa386be.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Total CBU Report - Toyota Logistic System' /&gt;" SearchSteps="Selector, FuzzySelector" Version="V2" Visibility="Visible" />
+                    </uix:NClick.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </uix:NClick>
+                  <ui:UiElementExists DisplayName="Element Exists - TLS Alert Notif" Exists="[TLSAlertNotifExists]" sap:VirtualizedContainerService.HintSize="1428,87" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
+                    <ui:UiElementExists.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="89281698-d5f5-44a8-a0e9-1927901ead40" Selector="[string.Format(&quot;&lt;html app='{0}' title='* - Toyota Logistic System' /&gt;&lt;webctrl aaname='*' tag='DIV' class='ajs-message ajs-error ajs-visible' /&gt;&quot;, BrowserApp)]">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:UiElementExists.Target>
+                  </ui:UiElementExists>
+                  <If Condition="[Not TLSAlertNotifExists]" DisplayName="If TLS Alert Notif not detected" sap:VirtualizedContainerService.HintSize="1428,1698" sap2010:WorkflowViewState.IdRef="If_1">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="933,1538" sap2010:WorkflowViewState.IdRef="RetryScope_2">
+                        <ui:RetryScope.ActivityBody>
+                          <ActivityAction>
+                            <Sequence DisplayName="Check if data appears" sap:VirtualizedContainerService.HintSize="891,1363" sap2010:WorkflowViewState.IdRef="Sequence_44">
+                              <Sequence.Variables>
+                                <Variable x:TypeArguments="x:Boolean" Name="DataExists" />
+                              </Sequence.Variables>
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:UiElementExists DisplayName="Element Exists - Data Exists" Exists="[DataExists]" sap:VirtualizedContainerService.HintSize="829,87" sap2010:WorkflowViewState.IdRef="UiElementExists_2">
+                                <ui:UiElementExists.Target>
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="57f51b87-1725-4e20-b655-2a4c4aaedbb7" Selector="&lt;webctrl id='ssrs' tag='IFRAME' class='embed-responsive-item' parentclass='embed-responsive embed-responsive-16by9' /&gt;" WaitForReady="COMPLETE">
+                                    <ui:Target.TimeoutMS>
+                                      <InArgument x:TypeArguments="x:Int32" />
+                                    </ui:Target.TimeoutMS>
+                                  </ui:Target>
+                                </ui:UiElementExists.Target>
+                              </ui:UiElementExists>
+                              <If Condition="[DataExists]" DisplayName="If Data Exists" sap:VirtualizedContainerService.HintSize="829,1125" sap2010:WorkflowViewState.IdRef="If_2">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Then>
+                                  <Sequence DisplayName="Data Exists" sap:VirtualizedContainerService.HintSize="450,967" sap2010:WorkflowViewState.IdRef="Sequence_46">
+                                    <Sequence.Variables>
+                                      <Variable x:TypeArguments="si:FileInfo" Name="CBUReportFile" />
+                                    </Sequence.Variables>
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="388,92" sap2010:WorkflowViewState.IdRef="LogMessage_5" Message="[&quot;Download CBU Report&quot;]" />
+                                    <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click 'Save Button Icon'" sap:VirtualizedContainerService.HintSize="388,157" sap2010:WorkflowViewState.IdRef="NClick_4" InteractionMode="DebuggerApi" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="843c708f-3596-4a43-9e08-bf2dd83927ab" Version="V3">
+                                      <uix:NClick.Target>
+                                        <uix:TargetAnchorable BrowserURL="http://10.85.72.37/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;InvoiceNumber=JSV-18327%2CJSV-18329%2C&amp;Username=tls_admin&amp;rs:embed=true&amp;rc:showbackbutton=true" DesignTimeRectangle="797, 130, 32, 32" DesignTimeScaleFactor="1" ElementType="Icon" FriendlyName="'IMG ReportViewerControl…'" FullSelectorArgument="&lt;webctrl id='ssrs' tag='IFRAME' /&gt;&lt;webctrl src='/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;amp;InvoiceNumber*' tag='IFRAME' /&gt;&lt;webctrl aaname='Export drop down menu' tableRow='1' tag='TABLE' /&gt;&lt;webctrl tableRow='1' tag='IMG' aaname='Export drop down menu' alt='Export drop down menu' id='ReportViewerControl_ctl05_ctl04_ctl00_ButtonImg' /&gt;" FuzzySelectorArgument="&lt;webctrl id='ssrs' tag='IFRAME' /&gt;&lt;webctrl src='/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;amp;InvoiceNumber*' tag='IFRAME' /&gt;&lt;webctrl aaname='Export drop down menu' tag='TABLE' /&gt;&lt;webctrl type='' tag='IMG' aaname='Export drop down menu' alt='Export drop down menu' id='ReportViewerControl_ctl05_ctl04_ctl00_ButtonImg' class='' /&gt;" Guid="697312bf-e2dd-42e3-ad6e-f3a7353aca17" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEWSURBVFhH7dUxDkRQEIDhPYhbUCpVVBoX0LiDI4hKRaNRcQGNioIzuIZ+NvOSJ5vNxLDJvtjNFH/sxjzvy67w2LYN7pSAuATEJSAuAXH9LqgsS4jj+KOqqiKvSXUaFAQB1HUNSZJAmqYwjuNhOIOzuAbXUtekOg3yfX/fqCgKcuY1nNFwXEvNUAmI6zagLMtgWZb7gBBjWdZnINu2T3UFhE3TdB1EnTvqCgj7D1DXdeQTWTcMw77OCAhv2CiK1PE9nEOwXmcMhDfsuq7q1fA6h7+QEVAYhtC2rfqsQdRmxkDzPIPrutA0jcLoF6fneWpTHf6VeZ7v33HmKyCs73twHId85hz1NZCJBMQlIC4BcQmI62agDZ5tOotRyx1t7QAAAABJRU5ErkJggg==" InformativeScreenshot="b71d729a8f438bc3f1a08d366f7d4ea2.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Total CBU Report - Toyota Logistic System' /&gt;" SearchSteps="Selector, Image" Version="V2" Visibility="Visible" WaitForReadyArgument="Complete" />
+                                      </uix:NClick.Target>
+                                    </uix:NClick>
+                                    <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click 'Excel'" sap:VirtualizedContainerService.HintSize="388,157" sap2010:WorkflowViewState.IdRef="NClick_5" InteractionMode="DebuggerApi" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="843c708f-3596-4a43-9e08-bf2dd83927ab" Version="V3">
+                                      <uix:NClick.Target>
+                                        <uix:TargetAnchorable BrowserURL="http://10.85.72.37/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;InvoiceNumber=JSV-18327%2CJSV-18329%2C&amp;Username=tls_admin&amp;rs:embed=true&amp;rc:showbackbutton=true" DesignTimeRectangle="796, 214, 170, 45" DesignTimeScaleFactor="1" FriendlyName="'Excel'" FullSelectorArgument="&lt;webctrl id='ssrs' tag='IFRAME' /&gt;&lt;webctrl src='/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;amp;InvoiceNumber*' tag='IFRAME' /&gt;&lt;webctrl idx='5' tableRow='4' tag='TABLE' /&gt;&lt;webctrl class='DisabledButton' tableRow='1' tag='DIV' parentclass='MenuBarBkGnd' parentid='ReportViewerControl_ctl05_ctl04_ctl00_Menu' visibleinnertext='Excel' /&gt;" FuzzySelectorArgument="&lt;webctrl id='ssrs' tag='IFRAME' /&gt;&lt;webctrl src='/ReportServer/Pages/ReportViewer.aspx?%2FCBUReport&amp;amp;InvoiceNumber*' tag='IFRAME' /&gt;&lt;webctrl tag='TABLE' /&gt;&lt;webctrl class='DisabledButton' type='' tag='DIV' parentclass='MenuBarBkGnd' parentid='ReportViewerControl_ctl05_ctl04_ctl00_Menu' visibleinnertext='Excel' aaname=' &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9; &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;' check:text='Excel' /&gt;" Guid="c66219c6-00ab-49e6-b9ff-1bc16a3ecdd1" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAK4AAAAxCAYAAABDPJJ4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGCSURBVHhe7dfLEYMgFEZhOqQsSqEUq3Dtygbc3AQUJWqWPv7hfDNMoomujjfE9X1v4zga8HbTNFnqNVnDTa8s1pvXabjA2xEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJBEuJGmHO0TzLli3HKIdF4XbWXDOXL3CBXkRbrMuDPeGoAi3WTeHO0/idfjm8LzFYTlePi9T+vd75Xx1X8Jt1v0TtwvmfLTUahec+bXaY9Qxv0/nq7ir6wm3Xbftcestbgo2xG90JcAkBXmyDx6i352vHgrCbdYze9wcXL1FmAPdpu8mh7t7CFy5lnCb9Ui4eeKG6if/6zhZZ/+Czgi3WQ/ucQeL/vgHrD7Oe9yT6bwi3GbdtsfNse4jPD0u11TnU+z1vUrdhNusi8IFrkW4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kES4kHQabnplsd68mLiQRLiQtIVr9gEvbTCSPlXM6gAAAABJRU5ErkJggg==" InformativeScreenshot="2ea4f0634e0d417fb21661abf236c8ba.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='Total CBU Report - Toyota Logistic System' /&gt;" SearchSteps="Selector, FuzzySelector" Version="V2" Visibility="Visible" />
+                                      </uix:NClick.Target>
+                                    </uix:NClick>
+                                    <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window Save As" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="WindowScope_2" InformativeScreenshot="97d25ca03e190c6909879c400ef13c9a" Selector="[string.Format(&quot;&lt;wnd app='{0}' cls='#32770' title='Save As' /&gt;&quot;, BrowserApp)]">
+                                      <ui:WindowScope.Body>
+                                        <ActivityAction x:TypeArguments="x:Object">
+                                          <ActivityAction.Argument>
+                                            <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                          </ActivityAction.Argument>
+                                          <Sequence DisplayName="Save CBU Report file" sap:VirtualizedContainerService.HintSize="496,609" sap2010:WorkflowViewState.IdRef="Sequence_45">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" Activate="True" ClickBeforeTyping="True" DisplayName="Type Into 'File Name'" EmptyField="True" sap:VirtualizedContainerService.HintSize="434,135" sap2010:WorkflowViewState.IdRef="TypeInto_2" SimulateType="True" Text="[in_Config(&quot;Input_Folder&quot;).ToString.Trim+&quot;\&quot;+Now.ToString(&quot;ddMMyyyy&quot;)+&quot;\&quot;+Now.ToString(&quot;HHmmss&quot;)+&quot;_&quot;+in_Config(&quot;CBUReport_FileName&quot;).ToString.Trim]">
+                                              <ui:TypeInto.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="abfedee2-9df8-4276-81b6-d3860a6e23e3" InformativeScreenshot="cc5a7e942335653404622aea2b68dc26" Selector="&lt;wnd aaname='Explorer Pane' cls='DirectUIHWND' /&gt;&lt;wnd aaname='File name:' cls='ComboBox' /&gt;&lt;wnd ctrlid='1001' /&gt;">
+                                                  <ui:Target.TimeoutMS>
+                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                  </ui:Target.TimeoutMS>
+                                                  <ui:Target.WaitForReady>
+                                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                  </ui:Target.WaitForReady>
+                                                </ui:Target>
+                                              </ui:TypeInto.Target>
+                                            </ui:TypeInto>
+                                            <ui:GetLastDownloadedFile FileResource="{x:Null}" IgnoreFiles="{x:Null}" Timeout="{x:Null}" DisplayName="Wait for Download" DownloadFolder="[in_Config(&quot;Input_Folder&quot;).ToString.Trim+&quot;/&quot;+Now.ToString(&quot;ddMMyyyy&quot;)]" File="[CBUReportFile]" sap:VirtualizedContainerService.HintSize="434,363" sap2010:WorkflowViewState.IdRef="GetLastDownloadedFile_2">
+                                              <ui:GetLastDownloadedFile.Body>
+                                                <ActivityAction>
+                                                  <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'Save'" sap:VirtualizedContainerService.HintSize="334,107" sap2010:WorkflowViewState.IdRef="Click_2" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                                    <ui:Click.CursorPosition>
+                                                      <ui:CursorPosition Position="Center">
+                                                        <ui:CursorPosition.OffsetX>
+                                                          <InArgument x:TypeArguments="x:Int32" />
+                                                        </ui:CursorPosition.OffsetX>
+                                                        <ui:CursorPosition.OffsetY>
+                                                          <InArgument x:TypeArguments="x:Int32" />
+                                                        </ui:CursorPosition.OffsetY>
+                                                      </ui:CursorPosition>
+                                                    </ui:Click.CursorPosition>
+                                                    <ui:Click.Target>
+                                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="64cdec81-10df-49ca-aa08-1969c9db9e25" InformativeScreenshot="f692fc017c43b0291a6d1f9eca5d4841" Selector="&lt;wnd ctrlid='1' title='&amp;amp;Save' /&gt;">
+                                                        <ui:Target.TimeoutMS>
+                                                          <InArgument x:TypeArguments="x:Int32" />
+                                                        </ui:Target.TimeoutMS>
+                                                        <ui:Target.WaitForReady>
+                                                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                        </ui:Target.WaitForReady>
+                                                      </ui:Target>
+                                                    </ui:Click.Target>
+                                                  </ui:Click>
+                                                </ActivityAction>
+                                              </ui:GetLastDownloadedFile.Body>
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                            </ui:GetLastDownloadedFile>
+                                          </Sequence>
+                                        </ActivityAction>
+                                      </ui:WindowScope.Body>
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                    </ui:WindowScope>
+                                    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Buttons="YesNo" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="388,85" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;Continue Execution?&quot;]" />
+                                    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="CBUReportFileProcess.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="388,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="CBUReportFileProcess.xaml">
+                                      <ui:InvokeWorkflowFile.Arguments>
+                                        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">
+                                          <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="in_Config" />
+                                        </InArgument>
+                                        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_DTTLSCBU">
+                                          <mva:VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="in_DTTLSCBU" />
+                                        </InArgument>
+                                        <InArgument x:TypeArguments="x:String" x:Key="in_CBUReportFile">
+                                          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="CBUReportFile.FullName" />
+                                        </InArgument>
+                                        <InArgument x:TypeArguments="x:Boolean" x:Key="in_QueueProcess">
+                                          <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="in_QueueProcess" />
+                                        </InArgument>
+                                        <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">
+                                          <mva:VisualBasicValue x:TypeArguments="ui:QueueItem" ExpressionText="in_TransactionItem" />
+                                        </InArgument>
+                                        <InOutArgument x:TypeArguments="sd:DataTable" x:Key="io_DTSummary">
+                                          <mva:VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="io_DTSummary" />
+                                        </InOutArgument>
+                                      </ui:InvokeWorkflowFile.Arguments>
+                                    </ui:InvokeWorkflowFile>
+                                  </Sequence>
+                                </If.Then>
+                                <If.Else>
+                                  <ui:LogMessage DisplayName="Log Message - Data Doesn't Exists" sap:VirtualizedContainerService.HintSize="334,92" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Warn" Message="[&quot;Can't downoad CBU Report&quot;]" />
+                                </If.Else>
+                              </If>
+                            </Sequence>
+                          </ActivityAction>
+                        </ui:RetryScope.ActivityBody>
+                        <ui:RetryScope.Condition>
+                          <ActivityFunc x:TypeArguments="x:Boolean" />
+                        </ui:RetryScope.Condition>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </ui:RetryScope>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="Throw Alert" sap:VirtualizedContainerService.HintSize="450,81" sap2010:WorkflowViewState.IdRef="Sequence_43">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <uix:NGetText DisplayName="Get Text" sap:VirtualizedContainerService.HintSize="388,157" sap2010:WorkflowViewState.IdRef="NGetText_1" TextString="[Alert]" Version="V3">
+                          <uix:NGetText.Target>
+                            <uix:TargetAnchorable DesignTimeRectangle="0, 0, 0, 0" FullSelectorArgument="&lt;webctrl aaname='*' tag='DIV' class='ajs-message ajs-error ajs-visible' innertext='*' /&gt;" Guid="4be45e8e-8e2b-4303-9629-2337e2248b7f" SearchSteps="Selector" Visibility="Interactive" />
+                          </uix:NGetText.Target>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </uix:NGetText>
+                        <Throw Exception="[New Exception(Alert)]" sap:VirtualizedContainerService.HintSize="388,25" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </ActivityAction>
+            </uix:NApplicationCard.Body>
+            <uix:NApplicationCard.TargetApp>
+              <uix:TargetApp Area="-8, -8, 1382, 744" BrowserType="Chrome" IconBase64="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" InformativeScreenshot="b11fb42daa2d9f23a411a75e202fedcb.jpg" Selector="[string.Format(&quot;&lt;html app='{0}' title='* - Toyota Logistic System' /&gt;&quot;, BrowserApp)]" Title="Total CBU Report - Toyota Logistic System" Url="[in_Config(&quot;TLS_URL&quot;).ToString.Trim]" />
+            </uix:NApplicationCard.TargetApp>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </uix:NApplicationCard>
+        </ActivityAction>
+      </ui:RetryScope.ActivityBody>
+      <ui:RetryScope.Condition>
+        <ActivityFunc x:TypeArguments="x:Boolean" />
+      </ui:RetryScope.Condition>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:RetryScope>
+  </Sequence>
+</Activity>

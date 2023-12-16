@@ -1,0 +1,3 @@
+Sub DeleteColumns()
+    Columns("AB:AZ").Delete
+End Sub

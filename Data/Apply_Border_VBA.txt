@@ -1,0 +1,13 @@
+Sub ApplyBorderToSelectedRange()
+    ' Get the selected range
+    Dim selectedRange As Range
+    Set selectedRange = Selection
+
+    ' Apply border to the selected range
+    With selectedRange.Borders
+        .LineStyle = xlContinuous ' You can change this to xlDash, xlDot, etc. as needed
+        .ColorIndex = 0 ' 0 means automatic color, you can set a specific color index
+        .TintAndShade = 0
+        .Weight = xlThin ' You can change this to xlMedium, xlThick, etc. as needed
+    End With
+End Sub
